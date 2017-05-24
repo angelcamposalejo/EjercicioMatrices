@@ -11,8 +11,6 @@ void Matrices::Window_Open(Win::Event& e)
 	//#ifdef _DEBUG
 	//tbxEntrada.Text = L"1,2,3\r\n4,5,6\r\n7,8,9";
 	//#endif
-	this->radioSuma.Checked = true;
-	this->radioResta.Checked = false;
 }
 
 void Matrices::btCalcular_Click(Win::Event& e)
@@ -22,68 +20,34 @@ void Matrices::btCalcular_Click(Win::Event& e)
 	MATRIX salida;
 	Sys::Convert::ToMatrix(tbxEntrada.Text, entradaA);
 	Sys::Convert::ToMatrix(tbxEntrada2.Text, entradaB);
-	if (radioSuma.Checked == true)
-	{
-		Suma(entradaA, entradaB, salida);
-	}
-	else
-	{
-		Resta(entradaA, entradaB, salida);
-	}
+	Producto(entradaA, entradaB, salida);
 }
-void Matrices::Suma(const MATRIX&entradaA, const MATRIX&entradaB, MATRIX&salida)
+void Matrices::Producto(const MATRIX&entradaA, const MATRIX&entradaB, MATRIX&salida)
 {
 	wstring texto;
 	const int rowsA = entradaA.size();
 	const int colsA = (rowsA == 0) ? 0 : entradaA[0].size();
 	const int rowsB = entradaB.size();
 	const int colsB = (rowsB == 0) ? 0 : entradaB[0].size();
-	if (rowsA != rowsB || colsA != colsB)
-	{
-		tbxEntrada.ShowBalloonTip(L"MatOper", L"Las matrices deben ser del mismo tamaño", TTI_ERROR);
-		return;
-	}
-	int i, j;
+	int i, j,k;
 	salida.resize(rowsA);
 	for (i = 0; i < rowsA; i++)
 	{
 		salida[i].resize(colsA);
 	}
+	//calular producto
 	for (i = 0; i < rowsA; i++)
 	{
-		for (j = 0; j < colsA; j++)
+		for (j = 0; j < colsB; j++)
 		{
-			salida[i][j] = entradaA[i][j] + entradaB[i][j];
+			salida[i][j] = 0;
+			for (k = 0; k < colsA; k++)
+			{
+				salida[i][j] = salida[i][j] + (entradaA[i][k] * entradaB[k][j]);
+			}
 		}
 	}
 	Sys::Convert::ToString(salida, texto);
 	tbxSalida.Text = texto;
 }
-void Matrices::Resta(const MATRIX&entradaA, const MATRIX&entradaB, MATRIX&salida)
-{
-	wstring texto;
-	const int rowsA = entradaA.size();
-	const int colsA = (rowsA == 0) ? 0 : entradaA[0].size();
-	const int rowsB = entradaB.size();
-	const int colsB = (rowsB == 0) ? 0 : entradaB[0].size();
-	if (rowsA != rowsB || colsA != colsB)
-	{
-		tbxEntrada.ShowBalloonTip(L"MatOper", L"Las matrices deben ser del mismo tamaño", TTI_ERROR);
-		return;
-	}
-	int i, j;
-	salida.resize(rowsA);
-	for (i = 0; i < rowsA; i++)
-	{
-		salida[i].resize(colsA);
-	}
-	for (i = 0; i < rowsA; i++)
-	{
-		for (j = 0; j < colsA; j++)
-		{
-			salida[i][j] = entradaA[i][j] - entradaB[i][j];
-		}
-	}
-	Sys::Convert::ToString(salida, texto);
-	tbxSalida.Text = texto;
-}
+
