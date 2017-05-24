@@ -9,54 +9,44 @@ public:
 	~Matrices()
 	{
 	}
+	void Suma(const MATRIX&entradaA, const MATRIX&entradaB, MATRIX&salida);
+	void Resta(const MATRIX&entradaA, const MATRIX&entradaB, MATRIX&saida);
 protected:
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Textbox tbxEntrada;
 	Win::Button btCalcular;
 	Win::Label lb2;
-	Win::Label lb3;
-	Win::Textbox tbxMaximo;
-	Win::Label lb4;
-	Win::Textbox tbxMaxPosition;
-	Win::Label lb4;
-	Win::Textbox tbxMinimo;
-	Win::Label lb5;
-	Win::Textbox tbxMinPosition;
+	Win::Button radioSuma;
+	Win::Button radioResta;
+	Win::Textbox tbxEntrada2;
+	Win::Textbox tbxSalida;
 protected:
 	Win::Gdi::Font fontArial014A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
 	{
-		dlgTemplate.cx = Sys::Convert::PixelToDlgUnitX(472);
-		dlgTemplate.cy = Sys::Convert::PixelToDlgUnitY(256);
+		dlgTemplate.cx = Sys::Convert::PixelToDlgUnitX(601);
+		dlgTemplate.cy = Sys::Convert::PixelToDlgUnitY(246);
 		dlgTemplate.style = WS_CAPTION | WS_POPUP | WS_SYSMENU | WS_VISIBLE | DS_CENTER | DS_MODALFRAME;
 	}
 	//_________________________________________________
 	void InitializeGui()
 	{
 		this->Text = L"Matrices";
-		tbxEntrada.Create(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_MULTILINE | ES_WANTRETURN | ES_LEFT | ES_WINNORMALCASE, 12, 47, 271, 189, hWnd, 1000);
-		btCalcular.Create(NULL, L"Calcular", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 294, 51, 110, 28, hWnd, 1001);
+		tbxEntrada.Create(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_MULTILINE | ES_WANTRETURN | ES_LEFT | ES_WINNORMALCASE, 12, 47, 130, 189, hWnd, 1000);
+		btCalcular.Create(NULL, L"Calcular", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 340, 113, 110, 28, hWnd, 1001);
 		lb2.Create(NULL, L"Introduce los elementos de la matriz separados por coma", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 11, 5, 272, 33, hWnd, 1002);
-		lb3.Create(NULL, L"Maximo", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 297, 87, 79, 25, hWnd, 1003);
-		tbxMaximo.Create(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 377, 88, 88, 25, hWnd, 1004);
-		lb4.Create(NULL, L"Posición Maximo", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 295, 126, 80, 32, hWnd, 1005);
-		tbxMaxPosition.Create(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 377, 129, 88, 25, hWnd, 1006);
-		lb4.Create(NULL, L"Minimo", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 296, 172, 80, 25, hWnd, 1007);
-		tbxMinimo.Create(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 378, 176, 87, 25, hWnd, 1008);
-		lb5.Create(NULL, L"Posición Minimo", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 296, 217, 80, 32, hWnd, 1009);
-		tbxMinPosition.Create(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 377, 221, 87, 25, hWnd, 1010);
+		radioSuma.Create(NULL, L"+", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_AUTORADIOBUTTON | BS_LEFT | BS_VCENTER, 160, 112, 43, 26, hWnd, 1003);
+		radioResta.Create(NULL, L"-", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_AUTORADIOBUTTON | BS_LEFT | BS_VCENTER, 160, 137, 45, 26, hWnd, 1004);
+		tbxEntrada2.Create(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_AUTOVSCROLL | ES_MULTILINE | ES_LEFT | ES_WINNORMALCASE, 211, 42, 127, 196, hWnd, 1005);
+		tbxSalida.Create(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_AUTOVSCROLL | ES_MULTILINE | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 466, 42, 128, 197, hWnd, 1006);
 		fontArial014A.Create(L"Arial", 14, false, false, false, false);
 		tbxEntrada.Font = fontArial014A;
 		btCalcular.Font = fontArial014A;
 		lb2.Font = fontArial014A;
-		lb3.Font = fontArial014A;
-		tbxMaximo.Font = fontArial014A;
-		lb4.Font = fontArial014A;
-		tbxMaxPosition.Font = fontArial014A;
-		lb4.Font = fontArial014A;
-		tbxMinimo.Font = fontArial014A;
-		lb5.Font = fontArial014A;
-		tbxMinPosition.Font = fontArial014A;
+		radioSuma.Font = fontArial014A;
+		radioResta.Font = fontArial014A;
+		tbxEntrada2.Font = fontArial014A;
+		tbxSalida.Font = fontArial014A;
 	}
 	//_________________________________________________
 	void btCalcular_Click(Win::Event& e);
